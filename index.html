@@ -16,7 +16,7 @@
       font-family: 'Montserrat', sans-serif;
       background: #4a2a7a;
       color: #fff;
-      overflow-x: hidden;
+      overflow: hidden;
       min-height: 100vh;
     }
 
@@ -346,7 +346,7 @@
     <div class="names">Maria Ester</div>
     <div class="subtitle">1 Mes de Amor</div>
     <div class="date-badge">✨ Desde el 26 de Abril de 2026 ✨</div>
-    <button class="btn-iniciar" onclick="document.getElementById('contador').scrollIntoView({behavior:'smooth'})">Comenzar</button>
+    <button class="btn-iniciar" onclick="iniciar()">Comenzar</button>
   </section>
 
   <!-- === CONTADOR === -->
@@ -439,6 +439,13 @@
 
     updateCounter();
     setInterval(updateCounter, 1000);
+
+    // === INICIAR (HABILITAR SCROLL) ===
+    function iniciar() {
+      document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
+      document.getElementById('contador').scrollIntoView({ behavior: 'smooth' });
+    }
 
     // === SCROLL SUAVE PARA NAVEGACIÓN ===
     document.querySelectorAll('a[href^="#"]').forEach(a => {
