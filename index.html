@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ivan Valentin ❤️ Maria Ester - 1 Mes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* === PARTICLES / HEARTS === */
+    #hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .heart-particle {
+      position: absolute;
+      bottom: -20px;
+      font-size: 1.2rem;
+      animation: floatUp linear infinite;
+      opacity: 0.4;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.4; }
+      100% { transform: translateY(-110vh) rotate(720deg) scale(0.2); opacity: 0; }
+    }
+
+    /* === SECTION GENERICA === */
+    section {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* === HERO === */
+    #hero {
+      background: radial-gradient(ellipse at center, #1a0a0a 0%, #0d0d0d 70%);
+    }
+
+    #hero .names {
+      font-family: 'Great Vibes', cursive;
+      font-size: 4rem;
+      background: linear-gradient(135deg, #ff6b6b, #ffb347, #ff6b6b);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    #hero .ampersand {
+      font-size: 3rem;
+      color: #ffb347;
+      margin: 0.5rem 0;
+      font-family: 'Great Vibes', cursive;
+      display: block;
+    }
+
+    #hero .subtitle {
+      font-size: 1.3rem;
+      font-weight: 300;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #ffb347;
+      margin-top: 1rem;
+      opacity: 0.8;
+    }
+
+    #hero .date-badge {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.6rem 2rem;
+      border: 1px solid rgba(255, 107, 107, 0.4);
+      border-radius: 50px;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      color: #ff6b6b;
+      background: rgba(255, 107, 107, 0.08);
+      backdrop-filter: blur(4px);
+    }
+
+    .scroll-hint {
+      margin-top: 3rem;
+      font-size: 2rem;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    /* === CONTADOR === */
+    #contador {
+      background: radial-gradient(ellipse at center, #0d1a0d 0%, #0d0d0d 70%);
+    }
+
+    #contador h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      color: #ffb347;
+      margin-bottom: 0.5rem;
+    }
+
+    #contador .sub {
+      color: #aaa;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .counter-grid {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .counter-box {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 1.5rem 2rem;
+      min-width: 110px;
+      backdrop-filter: blur(4px);
+    }
+
+    .counter-box .num {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff6b6b, #ffb347);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .counter-box .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #888;
+      margin-top: 0.3rem;
+    }
+
+    /* === CARTA === */
+    #carta {
+      background: radial-gradient(ellipse at center, #1a0d1a 0%, #0d0d0d 70%);
+    }
+
+    #carta h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      color: #ffb347;
+      margin-bottom: 0.5rem;
+    }
+
+    .letter-card {
+      max-width: 700px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      margin-top: 1.5rem;
+      text-align: left;
+      line-height: 1.8;
+      color: #ddd;
+      backdrop-filter: blur(4px);
+    }
+
+    .letter-card .greeting {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #ffb347;
+      margin-bottom: 1rem;
+    }
+
+    .letter-card p {
+      margin-bottom: 1rem;
+    }
+
+    .letter-card .signature {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.6rem;
+      color: #ff6b6b;
+      text-align: right;
+      margin-top: 1.5rem;
+    }
+
+    /* === GALERIA === */
+    #galeria {
+      background: radial-gradient(ellipse at center, #0d0d1a 0%, #0d0d0d 70%);
+    }
+
+    #galeria h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      color: #ffb347;
+      margin-bottom: 0.5rem;
+    }
+
+    #galeria .sub {
+      color: #aaa;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .photo-item {
+      aspect-ratio: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-item.vacia {
+      border: 1px dashed rgba(255, 107, 107, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 2.5rem;
+    }
+
+    .photo-item .hint {
+      font-size: 0.75rem;
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #444;
+    }
+
+    /* === FOOTER === */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 2rem;
+      text-align: center;
+      color: #444;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    footer .love {
+      color: #ff6b6b;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 600px) {
+      #hero .names { font-size: 2.8rem; }
+      #hero .ampersand { font-size: 2rem; }
+      #hero .subtitle { font-size: 0.9rem; letter-spacing: 2px; }
+      .counter-box { min-width: 80px; padding: 1rem; }
+      .counter-box .num { font-size: 2rem; }
+      .letter-card { padding: 1.5rem; }
+      .letter-card .greeting { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CORAZONES FLOTANTES -->
+  <div id="hearts-container"></div>
+
+  <!-- === HERO === -->
+  <section id="hero">
+    <div class="names">Ivan Valentin</div>
+    <span class="ampersand">❤</span>
+    <div class="names">Maria Ester</div>
+    <div class="subtitle">1 Mes de Amor</div>
+    <div class="date-badge">✨ Desde el 26 de Abril de 2026 ✨</div>
+    <div class="scroll-hint" onclick="document.getElementById('contador').scrollIntoView({behavior:'smooth'})">↓</div>
+  </section>
+
+  <!-- === CONTADOR === -->
+  <section id="contador">
+    <h2>Nuestro Tiempo</h2>
+    <p class="sub">días, horas, minutos y segundos de amor</p>
+    <div class="counter-grid" id="counter">
+      <div class="counter-box"><div class="num" id="days">00</div><div class="label">Días</div></div>
+      <div class="counter-box"><div class="num" id="hours">00</div><div class="label">Horas</div></div>
+      <div class="counter-box"><div class="num" id="minutes">00</div><div class="label">Minutos</div></div>
+      <div class="counter-box"><div class="num" id="seconds">00</div><div class="label">Segundos</div></div>
+    </div>
+  </section>
+
+  <!-- === CARTA === -->
+  <section id="carta">
+    <h2>Una Carta para Ti</h2>
+    <div class="letter-card">
+      <div class="greeting">Mi querida Maria Ester,</div>
+      <p>
+        Hoy celebramos nuestro primer mes juntos, y no puedo evitar sonreír al pensar en todo lo que hemos vivido en tan poco tiempo. Desde el día en que nuestras miradas se encontraron, supe que algo especial estaba comenzando.
+      </p>
+      <p>
+        Cada mensaje, cada risa, cada momento a tu lado ha sido un regalo que guardo en lo más profundo de mi corazón. Eres la persona que ilumina mis días y le da sentido a todo.
+      </p>
+      <p>
+        Este es solo el comienzo de nuestra historia, y quiero que sepas que cada día a tu lado es una bendición. Gracias por existir, por sonreírme, por amarme.
+      </p>
+      <p>
+        Te amo más de lo que las palabras pueden expresar. Feliz primer mes, mi amor.
+      </p>
+      <div class="signature">Con todo mi amor,<br>Ivan Valentin ❤</div>
+    </div>
+  </section>
+
+  <!-- === GALERIA === -->
+  <section id="galeria">
+    <h2>Nuestra Galería</h2>
+    <p class="sub">Espacio para nuestros recuerdos</p>
+    <div class="photo-grid" id="photoGrid">
+      <div class="photo-item"><img src="fotos/foto1.jpg" alt="Foto 1" onerror="this.parentElement.innerHTML='📸<span class=hint>Agrega foto</span>';this.parentElement.className+=' vacia'"></div>
+      <div class="photo-item"><img src="fotos/foto2.jpg" alt="Foto 2" onerror="this.parentElement.innerHTML='📸<span class=hint>Agrega foto</span>';this.parentElement.className+=' vacia'"></div>
+      <div class="photo-item"><img src="fotos/foto3.jpg" alt="Foto 3" onerror="this.parentElement.innerHTML='📸<span class=hint>Agrega foto</span>';this.parentElement.className+=' vacia'"></div>
+      <div class="photo-item"><img src="fotos/foto4.jpg" alt="Foto 4" onerror="this.parentElement.innerHTML='📸<span class=hint>Agrega foto</span>';this.parentElement.className+=' vacia'"></div>
+      <div class="photo-item"><img src="fotos/foto5.jpg" alt="Foto 5" onerror="this.parentElement.innerHTML='📸<span class=hint>Agrega foto</span>';this.parentElement.className+=' vacia'"></div>
+      <div class="photo-item"><img src="fotos/foto6.jpg" alt="Foto 6" onerror="this.parentElement.innerHTML='📸<span class=hint>Agrega foto</span>';this.parentElement.className+=' vacia'"></div>
+    </div>
+  </section>
+
+  <!-- === FOOTER === -->
+  <footer>
+    Hecho con <span class="love">❤</span> por Ivan Valentin para Maria Ester &mdash; 26 de Mayo de 2026
+  </footer>
+
+  <script>
+    // === CORAZONES FLOTANTES ===
+    (function createHearts() {
+      const container = document.getElementById('hearts-container');
+      const symbols = ['❤', '💕', '✨', '💖', '🌸'];
+      for (let i = 0; i < 30; i++) {
+        const el = document.createElement('div');
+        el.className = 'heart-particle';
+        el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.fontSize = (0.8 + Math.random() * 1.5) + 'rem';
+        el.style.animationDuration = (6 + Math.random() * 10) + 's';
+        el.style.animationDelay = (Math.random() * 12) + 's';
+        container.appendChild(el);
+      }
+    })();
+
+    // === CONTADOR ===
+    const startDate = new Date('2026-04-26T00:00:00');
+
+    function updateCounter() {
+      const now = new Date();
+      const diff = Math.max(0, now - startDate);
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      document.getElementById('days').textContent = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateCounter();
+    setInterval(updateCounter, 1000);
+
+    // === SCROLL SUAVE PARA NAVEGACIÓN ===
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>
