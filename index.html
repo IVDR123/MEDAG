@@ -110,16 +110,30 @@
       backdrop-filter: blur(4px);
     }
 
-    .scroll-hint {
-      margin-top: 3rem;
-      font-size: 2rem;
-      animation: bounce 2s infinite;
+    .btn-iniciar {
+      margin-top: 2.5rem;
+      padding: 0.8rem 2.5rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #fff;
+      background: linear-gradient(135deg, #ff6b6b, #ffb347);
+      border: none;
+      border-radius: 50px;
       cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(10px); }
+    .btn-iniciar:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(255, 107, 107, 0.5);
+    }
+
+    .btn-iniciar:active {
+      transform: translateY(0);
     }
 
     /* === CONTADOR === */
@@ -302,6 +316,21 @@
       .counter-box .num { font-size: 2rem; }
       .letter-card { padding: 1.5rem; }
       .letter-card .greeting { font-size: 1.5rem; }
+      .photo-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.6rem; }
+      .btn-iniciar { font-size: 0.85rem; padding: 0.7rem 2rem; }
+    }
+
+    @media (max-width: 400px) {
+      #hero .names { font-size: 2rem; }
+      #hero .ampersand { font-size: 1.5rem; }
+      #hero .subtitle { font-size: 0.75rem; letter-spacing: 1px; }
+      .counter-grid { gap: 0.8rem; }
+      .counter-box { min-width: 65px; padding: 0.7rem; }
+      .counter-box .num { font-size: 1.5rem; }
+      .counter-box .label { font-size: 0.6rem; }
+      .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+      section { padding: 1.5rem; }
+      .letter-card { padding: 1rem; }
     }
   </style>
 </head>
@@ -317,7 +346,7 @@
     <div class="names">Maria Ester</div>
     <div class="subtitle">1 Mes de Amor</div>
     <div class="date-badge">✨ Desde el 26 de Abril de 2026 ✨</div>
-    <div class="scroll-hint" onclick="document.getElementById('contador').scrollIntoView({behavior:'smooth'})">↓</div>
+    <button class="btn-iniciar" onclick="document.getElementById('contador').scrollIntoView({behavior:'smooth'})">Comenzar</button>
   </section>
 
   <!-- === CONTADOR === -->
