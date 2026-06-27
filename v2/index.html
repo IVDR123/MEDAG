@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ivan Valentin ❤ Maria Ester</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #4a2a7a;
+      --bg-hero: #6a3a9a;
+      --bg-dark: #3a2060;
+      --bg-card: rgba(255,255,255,0.04);
+      --border-card: rgba(255,255,255,0.06);
+      --gold: #ffb347;
+      --rose: #ff6b6b;
+      --text: #fff;
+      --text-muted: #aaa;
+      --text-dim: #888;
+      --gradient-btn: linear-gradient(135deg, var(--rose), var(--gold));
+      --gradient-text: linear-gradient(135deg, var(--rose), var(--gold), var(--rose));
+      --shadow-btn: 0 4px 20px rgba(255,107,107,0.3);
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 20px;
+      --radius-full: 50px;
+      --font-display: 'Great Vibes', cursive;
+      --font-body: 'Montserrat', sans-serif;
+      --transition: 0.3s ease;
+      --container-max: 800px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text);
+      overflow: hidden;
+      min-height: 100vh;
+    }
+
+    /* ===== SCROLL PROGRESS ===== */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      width: 0%;
+      height: 3px;
+      background: var(--gradient-btn);
+      z-index: 1000;
+      transition: width 0.1s linear;
+    }
+
+    /* ===== HEARTS ===== */
+    #hearts-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .heart-particle {
+      position: absolute;
+      bottom: -30px;
+      font-size: 1.2rem;
+      animation: floatUp linear infinite;
+      opacity: 0.35;
+      will-change: transform, opacity;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.35; }
+      100% { transform: translateY(-120vh) rotate(720deg) scale(0.1); opacity: 0; }
+    }
+
+    /* ===== SECTION BASE ===== */
+    section {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-sub {
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    /* ===== NAV DOTS ===== */
+    #nav-dots {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+
+    #nav-dots.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .nav-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      background: transparent;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .nav-dot.active {
+      background: var(--gold);
+      transform: scale(1.3);
+    }
+
+    .nav-dot:hover {
+      transform: scale(1.4);
+    }
+
+    /* ===== HERO ===== */
+    #hero {
+      background: radial-gradient(ellipse at center, var(--bg-hero) 0%, var(--bg-primary) 70%);
+    }
+
+    #hero .names {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      background: var(--gradient-text);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    #hero .ampersand {
+      font-size: 3rem;
+      color: var(--gold);
+      margin: 0.5rem 0;
+      font-family: var(--font-display);
+      display: block;
+    }
+
+    #hero .subtitle {
+      font-size: 1.3rem;
+      font-weight: 300;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 1rem;
+      opacity: 0.9;
+    }
+
+    #hero .date-badge {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.6rem 2rem;
+      border: 1px solid rgba(255,107,107,0.4);
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      color: var(--rose);
+      background: rgba(255,107,107,0.08);
+      backdrop-filter: blur(4px);
+    }
+
+    #hero .current-month-badge {
+      display: inline-block;
+      margin-top: 0.6rem;
+      padding: 0.4rem 1.5rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      color: var(--gold);
+      background: rgba(255,179,71,0.1);
+      border: 1px solid rgba(255,179,71,0.3);
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-iniciar {
+      margin-top: 2.5rem;
+      padding: 0.8rem 2.5rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text);
+      background: var(--gradient-btn);
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: var(--shadow-btn);
+    }
+
+    .btn-iniciar:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(255,107,107,0.5);
+    }
+
+    .btn-iniciar:active {
+      transform: translateY(0);
+    }
+
+    .btn-iniciar.pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,107,0.4); }
+      50% { box-shadow: 0 0 0 15px rgba(255,107,107,0); }
+    }
+
+    /* ===== COUNTER ===== */
+    #contador {
+      background: radial-gradient(ellipse at center, var(--bg-dark) 0%, var(--bg-primary) 70%);
+    }
+
+    .counter-grid {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .counter-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 1.5rem 2rem;
+      min-width: 110px;
+      backdrop-filter: blur(4px);
+    }
+
+    .counter-box .num {
+      font-size: 3rem;
+      font-weight: 700;
+      background: var(--gradient-text);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    .counter-box .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      margin-top: 0.3rem;
+    }
+
+    /* ===== MOMENTOS (TIMELINE) ===== */
+    #momentos {
+      background: radial-gradient(ellipse at center, var(--bg-hero) 0%, var(--bg-primary) 70%);
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .month-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .month-nav-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      color: var(--text);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background var(--transition), border-color var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .month-nav-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--gold);
+    }
+
+    .month-nav-btn:disabled {
+      opacity: 0.25;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .month-nav-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .month-dots {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .month-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,179,71,0.25);
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .month-dot.active {
+      background: var(--gold);
+      transform: scale(1.4);
+    }
+
+    .month-dot:hover {
+      background: rgba(255,179,71,0.5);
+    }
+
+    .month-card {
+      max-width: var(--container-max);
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      text-align: left;
+      line-height: 1.8;
+      color: #ddd;
+      backdrop-filter: blur(4px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .month-card.fade {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .month-card .month-badge {
+      display: inline-block;
+      padding: 0.3rem 1.2rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: var(--gradient-btn);
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .month-card .month-range {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+      font-weight: 300;
+    }
+
+    .month-card .month-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .month-card p {
+      margin-bottom: 1rem;
+    }
+
+    .month-card .month-signature {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--rose);
+      text-align: right;
+      margin-top: 1.5rem;
+    }
+
+    .month-placeholder {
+      max-width: var(--container-max);
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px dashed rgba(255,179,71,0.3);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .month-placeholder .emoji {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .month-placeholder p {
+      font-style: italic;
+    }
+
+    /* ===== GALERIA ===== */
+    #galeria {
+      background: radial-gradient(ellipse at center, var(--bg-dark) 0%, var(--bg-primary) 70%);
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      max-width: var(--container-max);
+      width: 100%;
+    }
+
+    .photo-item {
+      aspect-ratio: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      position: relative;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .photo-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-item.placeholder {
+      border: 1px dashed rgba(255,107,107,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 2.5rem;
+      cursor: default;
+    }
+
+    .photo-item.placeholder:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .photo-item .hint {
+      font-size: 0.75rem;
+      color: #444;
+      margin-top: 0.3rem;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 2rem;
+      text-align: center;
+      color: var(--text);
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+    footer .love {
+      color: var(--rose);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .section-title { font-size: 2.4rem; }
+      #hero .names { font-size: 3rem; }
+      #hero .ampersand { font-size: 2.2rem; }
+      #hero .subtitle { font-size: 1rem; letter-spacing: 2px; }
+      .counter-box { min-width: 90px; padding: 1.2rem; }
+      .counter-box .num { font-size: 2.2rem; }
+      .month-card { padding: 1.8rem; }
+      .month-card .month-title { font-size: 1.6rem; }
+      .photo-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.8rem; }
+      #nav-dots { right: 12px; }
+      .nav-dot { width: 8px; height: 8px; }
+    }
+
+    @media (max-width: 600px) {
+      .section-title { font-size: 2rem; }
+      #hero .names { font-size: 2.4rem; }
+      #hero .ampersand { font-size: 1.8rem; }
+      #hero .subtitle { font-size: 0.85rem; letter-spacing: 1px; }
+      #hero .date-badge { font-size: 0.78rem; padding: 0.4rem 1.2rem; }
+      .counter-grid { gap: 0.8rem; }
+      .counter-box { min-width: 75px; padding: 0.8rem; }
+      .counter-box .num { font-size: 1.6rem; }
+      .counter-box .label { font-size: 0.6rem; }
+      .month-card { padding: 1.2rem; }
+      .month-card .month-title { font-size: 1.4rem; }
+      .month-card .month-signature { font-size: 1.3rem; }
+      .month-nav { gap: 1rem; }
+      .month-nav-btn { width: 36px; height: 36px; font-size: 1rem; }
+      .month-nav-label { font-size: 0.8rem; min-width: 80px; }
+      .photo-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.6rem; }
+      .btn-iniciar { font-size: 0.85rem; padding: 0.7rem 2rem; }
+      section { padding: 2rem 1.2rem; }
+      #nav-dots { right: 8px; gap: 8px; }
+    }
+
+    @media (max-width: 400px) {
+      .section-title { font-size: 1.6rem; }
+      #hero .names { font-size: 1.8rem; }
+      #hero .ampersand { font-size: 1.4rem; }
+      #hero .subtitle { font-size: 0.7rem; letter-spacing: 1px; }
+      .counter-box { min-width: 60px; padding: 0.6rem; }
+      .counter-box .num { font-size: 1.3rem; }
+      .counter-box .label { font-size: 0.55rem; }
+      .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
+      .month-card { padding: 1rem; }
+      .month-card .month-title { font-size: 1.2rem; }
+      section { padding: 1.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="scroll-progress"></div>
+
+  <div id="hearts-container"></div>
+
+  <nav id="nav-dots" aria-label="Navegación"></nav>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero">
+    <div class="names">Ivan Valentin</div>
+    <span class="ampersand">❤</span>
+    <div class="names">Maria Ester</div>
+    <div class="subtitle" id="heroSubtitle">1 Mes de Amor</div>
+    <div class="date-badge">✨ Desde el 26 de Abril de 2026 ✨</div>
+    <div class="current-month-badge" id="monthBadge"></div>
+    <button class="btn-iniciar pulse" onclick="iniciar()">Comenzar</button>
+  </section>
+
+  <!-- ===== CONTADOR ===== -->
+  <section id="contador">
+    <h2 class="section-title">Nuestro Tiempo</h2>
+    <p class="section-sub">días, horas, minutos y segundos de amor</p>
+    <div class="counter-grid" id="counter">
+      <div class="counter-box"><div class="num" id="days">00</div><div class="label">Días</div></div>
+      <div class="counter-box"><div class="num" id="hours">00</div><div class="label">Horas</div></div>
+      <div class="counter-box"><div class="num" id="minutes">00</div><div class="label">Minutos</div></div>
+      <div class="counter-box"><div class="num" id="seconds">00</div><div class="label">Segundos</div></div>
+    </div>
+  </section>
+
+  <!-- ===== MOMENTOS ===== -->
+  <section id="momentos">
+    <h2 class="section-title">Nuestros Momentos</h2>
+    <p class="section-sub">Cada mes a tu lado es especial</p>
+
+    <div class="month-nav">
+      <button class="month-nav-btn" id="prevMonth" aria-label="Mes anterior">◀</button>
+      <span class="month-nav-label" id="monthNavLabel">Mes 1 de 1</span>
+      <button class="month-nav-btn" id="nextMonth" aria-label="Mes siguiente">▶</button>
+    </div>
+
+    <div class="month-dots" id="monthDots"></div>
+
+    <div id="monthCardContainer">
+      <div class="month-placeholder">
+        <div class="emoji">💫</div>
+        <p>Pronto habrá un nuevo mensaje aquí...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALERIA ===== -->
+  <section id="galeria">
+    <h2 class="section-title">Nuestra Galería</h2>
+    <p class="section-sub">Espacio para nuestros recuerdos</p>
+    <div class="photo-grid" id="photoGrid">
+      <div class="photo-item"><img src="fotos/foto1.jpg" alt="Foto 1" onerror="mostrarPlaceholder(this)"></div>
+      <div class="photo-item"><img src="fotos/foto2.jpg" alt="Foto 2" onerror="mostrarPlaceholder(this)"></div>
+      <div class="photo-item"><img src="fotos/foto3.jpg" alt="Foto 3" onerror="mostrarPlaceholder(this)"></div>
+      <div class="photo-item"><img src="fotos/foto4.jpg" alt="Foto 4" onerror="mostrarPlaceholder(this)"></div>
+      <div class="photo-item"><img src="fotos/foto5.jpg" alt="Foto 5" onerror="mostrarPlaceholder(this)"></div>
+      <div class="photo-item"><img src="fotos/foto6.jpg" alt="Foto 6" onerror="mostrarPlaceholder(this)"></div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    Hecho con <span class="love">❤</span> por Ivan Valentin para Maria Ester &mdash; <span id="footerDate"></span>
+  </footer>
+
+  <script>
+    // ============================================================
+    //  CONFIGURACIÓN — Agrega un nuevo objeto aquí cada mes 🎂
+    // ============================================================
+    const CONFIG = {
+      startDate: new Date('2026-04-26T00:00:00'),
+      name1: 'Ivan Valentin',
+      name2: 'Maria Ester',
+      meses: [
+        // --- MES 1 (26 Abr — 26 May 2026) ---
+        {
+          numero: 1,
+          titulo: 'Nuestro Primer Mes',
+          rango: '26 de Abril — 26 de Mayo de 2026',
+          mensaje: `Hoy celebramos nuestro primer mes juntos, y no puedo evitar sonreír al pensar en todo lo que hemos vivido en tan poco tiempo. Desde el día en que nuestras miradas se encontraron, supe que algo especial estaba comenzando.
+
+Cada mensaje, cada risa, cada momento a tu lado ha sido un regalo que guardo en lo más profundo de mi corazón. Eres la persona que ilumina mis días y le da sentido a todo.
+
+Este es solo el comienzo de nuestra historia, y quiero que sepas que cada día a tu lado es una bendición. Gracias por existir, por sonreírme, por amarme.
+
+Te amo más de lo que las palabras pueden expresar. Feliz primer mes, mi amor.`,
+          firma: 'Con todo mi amor,\nIvan Valentin ❤'
+        },
+
+        // --- MES 2 (26 May — 26 Jun 2026) ---
+        {
+          numero: 2,
+          titulo: 'Dos Meses de Felicidad',
+          rango: '26 de Mayo — 26 de Junio de 2026',
+          mensaje: `Hoy cumplimos dos meses juntos, y mi corazón se llena de alegría al recordar todo lo que hemos compartido. Estos sesenta días han sido los más hermosos de mi vida.
+
+He visto tu sonrisa iluminar mis mañanas y tu amor transformar mis días grises en momentos llenos de color. Cada vez que te tengo cerca el mundo parece detenerse, y solo existimos tú y yo.
+
+Gracias por cada mensaje de buenos días, por cada risa compartida, por cada vez que tus ojos me miran con ese brillo tan especial. Eres mi paz y mi felicidad.
+
+Dos meses y siento que te conozco de toda la vida. Dos meses y aún tengo tanto por descubrir de ti. Dos meses y ya eres lo más importante para mí.
+
+Te amo más cada día, mi amor. Feliz segundo mes.`,
+          firma: 'Siempre tuyo,\nIvan Valentin ❤'
+        },
+
+        // --- ★ AGREGAR NUEVOS MESES AQUÍ ★ ---
+        // Copia este bloque, cambia numero, titulo, rango, mensaje y firma
+        // {
+        //   numero: 3,
+        //   titulo: 'Tres Meses de...',
+        //   rango: '26 de Junio — 26 de Julio de 2026',
+        //   mensaje: `Escribe aquí tu mensaje...`,
+        //   firma: 'Siempre tuyo,\nIvan Valentin ❤'
+        // },
+      ]
+    };
+
+
+    // ============================================================
+    //  LÓGICA DEL CONTADOR DE MESES
+    // ============================================================
+    function calcularMesActual() {
+      const ahora = new Date();
+      let meses = (ahora.getFullYear() - CONFIG.startDate.getFullYear()) * 12;
+      meses += ahora.getMonth() - CONFIG.startDate.getMonth();
+      if (ahora.getDate() < CONFIG.startDate.getDate()) meses--;
+      return Math.max(0, meses);
+    }
+
+    function obtenerMensajeMes() {
+      const mesesCompletos = calcularMesActual();
+      if (mesesCompletos === 0) return 'apenas comenzamos';
+      if (mesesCompletos === 1) return '1 Mes de Amor';
+      return mesesCompletos + ' Meses de Amor';
+    }
+
+    function actualizarHero() {
+      document.getElementById('heroSubtitle').textContent = obtenerMensajeMes();
+      const badge = document.getElementById('monthBadge');
+      const meses = calcularMesActual();
+      if (meses > 0) {
+        badge.textContent = '🌟 ' + (meses === 1 ? '1 mes' : meses + ' meses') + ' de felicidad';
+        badge.style.display = 'inline-block';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+
+
+    // ============================================================
+    //  CONTADOR DE TIEMPO
+    // ============================================================
+    function updateCounter() {
+      const now = new Date();
+      const diff = Math.max(0, now - CONFIG.startDate);
+      const totalSeconds = Math.floor(diff / 1000);
+      document.getElementById('days').textContent = String(Math.floor(totalSeconds / 86400)).padStart(2, '0');
+      document.getElementById('hours').textContent = String(Math.floor((totalSeconds % 86400) / 3600)).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(totalSeconds % 60).padStart(2, '0');
+    }
+
+
+    // ============================================================
+    //  MOMENTOS (TIMELINE DE MESES)
+    // ============================================================
+    let mesActual = 0; // index en CONFIG.meses
+
+    function renderMonth(index) {
+      const container = document.getElementById('monthCardContainer');
+      const data = CONFIG.meses[index];
+
+      if (!data) {
+        container.innerHTML = `
+          <div class="month-placeholder">
+            <div class="emoji">💫</div>
+            <p>Pronto habrá un nuevo mensaje aquí...</p>
+          </div>`;
+        return;
+      }
+
+      const parrafos = data.mensaje.split('\n\n').filter(p => p.trim());
+
+      container.innerHTML = `
+        <div class="month-card" id="monthCard">
+          <div class="month-badge">Mes ${data.numero}</div>
+          <div class="month-range">${data.rango}</div>
+          <div class="month-title">${data.titulo}</div>
+          ${parrafos.map(p => `<p>${p}</p>`).join('')}
+          <div class="month-signature">${data.firma.replace(/\n/g, '<br>')}</div>
+        </div>`;
+
+      // Actualizar navegación
+      document.getElementById('monthNavLabel').textContent =
+        `Mes ${data.numero} de ${CONFIG.meses.length}`;
+
+      document.getElementById('prevMonth').disabled = (index === 0);
+      document.getElementById('nextMonth').disabled = (index === CONFIG.meses.length - 1);
+
+      // Dots
+      document.querySelectorAll('.month-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    function cambiarMes(delta) {
+      const nuevo = mesActual + delta;
+      if (nuevo < 0 || nuevo >= CONFIG.meses.length) return;
+      mesActual = nuevo;
+      renderMonth(mesActual);
+    }
+
+    function buildMonthDots() {
+      const container = document.getElementById('monthDots');
+      container.innerHTML = '';
+      CONFIG.meses.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'month-dot' + (i === mesActual ? ' active' : '');
+        dot.addEventListener('click', () => {
+          mesActual = i;
+          renderMonth(mesActual);
+        });
+        container.appendChild(dot);
+      });
+    }
+
+    function initMomentos() {
+      // Mostrar el último mes configurado por defecto
+      mesActual = CONFIG.meses.length - 1;
+      if (CONFIG.meses.length > 0) {
+        buildMonthDots();
+        renderMonth(mesActual);
+      }
+      document.getElementById('prevMonth').addEventListener('click', () => cambiarMes(-1));
+      document.getElementById('nextMonth').addEventListener('click', () => cambiarMes(1));
+    }
+
+
+    // ============================================================
+    //  GALERÍA — PLACEHOLDER
+    // ============================================================
+    function mostrarPlaceholder(img) {
+      const parent = img.parentElement;
+      parent.innerHTML = '📸<span class="hint">Agrega foto</span>';
+      parent.className += ' placeholder';
+    }
+
+
+    // ============================================================
+    //  CORAZONES FLOTANTES
+    // ============================================================
+    (function createHearts() {
+      const container = document.getElementById('hearts-container');
+      const symbols = ['❤', '💕', '✨', '💖', '🌸'];
+      for (let i = 0; i < 30; i++) {
+        const el = document.createElement('div');
+        el.className = 'heart-particle';
+        el.textContent = symbols[i % symbols.length];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.fontSize = (0.8 + Math.random() * 1.5) + 'rem';
+        el.style.animationDuration = (6 + Math.random() * 10) + 's';
+        el.style.animationDelay = (Math.random() * 12) + 's';
+        container.appendChild(el);
+      }
+    })();
+
+
+    // ============================================================
+    //  NAVEGACIÓN / SCROLL
+    // ============================================================
+    const secciones = [
+      { id: 'hero', label: 'Inicio' },
+      { id: 'contador', label: 'Contador' },
+      { id: 'momentos', label: 'Momentos' },
+      { id: 'galeria', label: 'Galería' },
+    ];
+
+    function buildNavDots() {
+      const nav = document.getElementById('nav-dots');
+      nav.innerHTML = '';
+      secciones.forEach((sec, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+        dot.title = sec.label;
+        dot.addEventListener('click', () => {
+          document.getElementById(sec.id).scrollIntoView({ behavior: 'smooth' });
+        });
+        nav.appendChild(dot);
+      });
+    }
+
+    function updateNavDots() {
+      const dots = document.querySelectorAll('.nav-dot');
+      let activeIndex = 0;
+      const scrollPos = window.scrollY + window.innerHeight / 2;
+
+      secciones.forEach((sec, i) => {
+        const el = document.getElementById(sec.id);
+        if (el && el.offsetTop <= scrollPos) {
+          activeIndex = i;
+        }
+      });
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === activeIndex);
+      });
+    }
+
+    function updateScrollProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('scroll-progress').style.width = progress + '%';
+    }
+
+    // Habilitar scroll
+    function iniciar() {
+      document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
+      document.getElementById('nav-dots').classList.add('visible');
+      document.getElementById('contador').scrollIntoView({ behavior: 'smooth' });
+      document.querySelector('.btn-iniciar').classList.remove('pulse');
+    }
+
+    // Scroll suave para anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Eventos de scroll
+    window.addEventListener('scroll', () => {
+      updateNavDots();
+      updateScrollProgress();
+    }, { passive: true });
+
+
+    // ============================================================
+    //  FOOTER
+    // ============================================================
+    document.getElementById('footerDate').textContent =
+      new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+
+
+    // ============================================================
+    //  INIT
+    // ============================================================
+    actualizarHero();
+    updateCounter();
+    setInterval(updateCounter, 1000);
+    initMomentos();
+    buildNavDots();
+    updateScrollProgress();
+
+  </script>
+
+</body>
+</html>
